@@ -1,7 +1,5 @@
-Dalek
-=====
-
 Dalek "Promise" Library
+=======================
 
 This library is here to exterminate a stack, or propagate an asynchronous promise.
 
