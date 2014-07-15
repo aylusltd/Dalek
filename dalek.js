@@ -234,7 +234,7 @@ window.Dalek = (function dalekMaker(window){
                         that.functions=g();
                         t=window.expectedThis(f)||that;
                         try{f.apply(t,a);}catch(e){that.error.apply(t,e,a)}
-                        that.exterminate()
+                        that.exterminate(a)
                     } else if(exterminated){
                         exterminated = false;
                         makePrivate(that.id);

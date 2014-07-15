@@ -217,7 +217,7 @@ exports.Dalek = (function dalekMaker(global){
                 }
                 this.stack.get = g.bind(that);
                 var exterminated = false;
-                
+                var argArray =[];
 
                 this.exterminate = function(args){
                     that.id = generateID();
@@ -234,7 +234,7 @@ exports.Dalek = (function dalekMaker(global){
                         that.functions=g();
                         t=global.expectedThis(f)||that;
                         try{f.apply(t,a);}catch(e){that.error.apply(t,e,a)}
-                        that.exterminate()
+                        that.exterminate(a)
                     } else if(exterminated){
                         exterminated = false;
                         makePrivate(that.id);
