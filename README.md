@@ -13,7 +13,8 @@ How to Use?
 First, include dalek.min.js in your web page or node project.
 
 For the web:
-<script src='path/to/dalek.min.js'></script>
+
+    <script src='path/to/dalek.min.js'></script>
 
 For Node.js:
 
@@ -21,7 +22,7 @@ For Node.js:
     
 Second, create a new dalek:
 
-  var robbie = new Dalek();
+    var robbie = new Dalek();
 
 That's it.
 
@@ -41,7 +42,7 @@ Case 1:
     }
     var robbie = new Dalek(succes,error);
     
-In this case, our very expressive Dalek will log "EXTERMINATE!!" if he resolves successfully, or "EXTERMINATE!" if he were to fail.
+In this case, our very expressive Dalek will log `"EXTERMINATE!!"` if he resolves successfully, or `"EXTERMINATE!"` if he were to fail.
 
 Case 2:
 
@@ -49,7 +50,8 @@ Case 2:
         success : function(){console.log("EXTERMINATE"),
         error : function(){console.log("EXTERMINATE! EXTERMINATE!")}
     };
-    
+
+
     var robbie = new Dalek(options);
 
 As adorable as this little go-getter is, we now have a promise handler that will be ready to do your horrible bidding.
@@ -61,6 +63,6 @@ Since I wasn't allowed to equip them with death rays, every Dalek supports a few
 * run
 * stack
 * exterminate (runs through the stack)
+* extend
+* expectedThis
 * and much much more...
-
-(also supplies an 'extend' and 'expectedThis' shim)
