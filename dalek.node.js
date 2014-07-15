@@ -1,9 +1,9 @@
-window.Dalek = (function dalekMaker(window){
+exports.Dalek = (function dalekMaker(global){
     var method, collection=[];
     id=0;
     function findem(){
         var arr =[];
-        for(var key in window){
+        for(var key in global){
             //console.log(key)
             if(key.indexOf('dalek') > -1){
                 arr.push(key);
@@ -15,7 +15,7 @@ window.Dalek = (function dalekMaker(window){
     function finder(){
         return new findem();
     }
-    window.findDaleks = window.findDaleks || findem;
+    global.findDaleks = global.findDaleks || findem;
     function devNull(){ return null;}
     function expectedThis(func){
         var map = {
@@ -25,16 +25,16 @@ window.Dalek = (function dalekMaker(window){
         for(var key in map){
             for(var i=0; i<map[key].length; i++){
                 method = map[key][i];
-                if(window[key][method] == func){
-                    return window[key];
+                if(global[key][method] == func){
+                    return global[key];
                 }
             }
         }
-        if(typeof window[func.name] == 'function'){
-            return window;
-            for(var n in window){
-                if(window[n][func.name] == func){
-                    return window[n];
+        if(typeof global[func.name] == 'function'){
+            return global;
+            for(var n in global){
+                if(global[n][func.name] == func){
+                    return global[n];
                 }
             }
         }
@@ -54,47 +54,47 @@ window.Dalek = (function dalekMaker(window){
             }
         }
     }
-    if(window.Dalek){
-        return window.Dalek;
+    if(global.Dalek){
+        return global.Dalek;
     } else {
         
-        console = window.console || {
+        console = global.console || {
             error : devNull,
             log : devNull,
             info : devNull,
             dir : devNull
         };
 
-        window.expectedThis = (function eThisConstructor(window){
+        global.expectedThis = (function eThisConstructor(global){
             
-            if(window.expectedThis){
-                return window.expectedThis;
+            if(global.expectedThis){
+                return global.expectedThis;
             } else {
                 
                 return expectedThis;
             }
-        })(window);
+        })(global);
 
-        window.extend = (function eConstructor(window){
-            if(window.extend){
-                return window.extend;
+        global.extend = (function eConstructor(global){
+            if(global.extend){
+                return global.extend;
             } else {
              
              return extend;
             }
 
-        })(window);
+        })(global);
 
         function Dalek(arg1, errorCallback, lg){
             var c = {
-                error   : this.logLevel > 0 ? console.error.bind(window.console) : devNull,
-                warn    : this.logLevel > 1 ? console.warn.bind(window.console)  : devNull,
-                log     : this.logLevel > 2 ? console.log.bind(window.console)   : devNull,
-                dir     : this.logLevel > 2 ? console.dir.bind(window.console)   : devNull,
-                info    : this.logLevel > 3 ? console.info.bind(window.console)  : devNull,
-                helpful : this.logLevel > 4 ? console.log.bind(window.console)   : devNull,
-                verbose : this.logLevel > 5 ? console.log.bind(window.console)   : devNull,
-                bored   : this.logLevel > 6 ? console.log.bind(window.console)   : devNull
+                error   : this.logLevel > 0 ? console.error.bind(global.console) : devNull,
+                warn    : this.logLevel > 1 ? console.warn.bind(global.console)  : devNull,
+                log     : this.logLevel > 2 ? console.log.bind(global.console)   : devNull,
+                dir     : this.logLevel > 2 ? console.dir.bind(global.console)   : devNull,
+                info    : this.logLevel > 3 ? console.info.bind(global.console)  : devNull,
+                helpful : this.logLevel > 4 ? console.log.bind(global.console)   : devNull,
+                verbose : this.logLevel > 5 ? console.log.bind(global.console)   : devNull,
+                bored   : this.logLevel > 6 ? console.log.bind(global.console)   : devNull
             }
             var intervals =[],
                 timeouts=[],
@@ -123,7 +123,7 @@ window.Dalek = (function dalekMaker(window){
             };
             function generateID(){
                 //var counter = 0;
-                if(typeof that.id == 'number' && typeof window['dalek' + that.id] == 'undefined' && that.id >1){
+                if(typeof that.id == 'number' && typeof global['dalek' + that.id] == 'undefined' && that.id >1){
                     c.warn('keeping id');
                     c.log(that.id);
                     return that.id;
@@ -135,7 +135,7 @@ window.Dalek = (function dalekMaker(window){
                     }
                     id+=Math.ceil(Math.random()*1000);
                 }while(collection[id]);
-                if(window['dalek' + id]){
+                if(global['dalek' + id]){
                     generateID();
                 } else {
                     c.warn('setting id');
@@ -146,15 +146,15 @@ window.Dalek = (function dalekMaker(window){
                 
             }
             function makePublic(id){
-                window['dalek' + id] =that;
+                global['dalek' + id] =that;
             }
             function makePrivate(id){
-                delete window['dalek' + id];
+                delete global['dalek' + id];
             };
 
             //var valid = false;
             if(typeof arg1 == 'object'){
-                window.extend(this,arg1);
+                global.extend(this,arg1);
             }
             
             c.bored('71:exterminate');
@@ -232,7 +232,7 @@ window.Dalek = (function dalekMaker(window){
                         exterminated = true;
                         f=stack.shift();
                         that.functions=g();
-                        t=window.expectedThis(f)||that;
+                        t=global.expectedThis(f)||that;
                         try{f.apply(t,a);}catch(e){that.error.apply(t,e,a)}
                         that.exterminate()
                     } else if(exterminated){
@@ -250,7 +250,7 @@ window.Dalek = (function dalekMaker(window){
                 };
                 this.next = function(func){
                     if(typeof func == 'function'){
-                        var e = window.expectedThis(func) || that;
+                        var e = global.expectedThis(func) || that;
                         that.success=func.bind(e, Array.prototype.slice.call(arguments,1))
                     }
                 }
@@ -258,7 +258,7 @@ window.Dalek = (function dalekMaker(window){
                     errorCallback.apply(this,[this,arguments]);
                 };
                 function run(func, e, args){
-                    var expectedThis = e || that.expectedThis || window.expectedThis(func) || that;
+                    var expectedThis = e || that.expectedThis || global.expectedThis(func) || that;
                     var a = args || that.arguments
                     if(!(a instanceof Array) && a){
                         a=[a]
@@ -302,4 +302,4 @@ window.Dalek = (function dalekMaker(window){
         }
         return Dalek;
     }
-})(window);
+})(global);
